@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiddlehead — grow your own AI models, watch them learn</title>
+<meta name="description" content="An open-source studio for training, fine-tuning and serving your own small AI models — with a live view inside the network while it learns. Runs on your laptop, no GPU required.">
+<link rel="canonical" href="https://aniketshukla1.github.io/fiddlehead/">
+<meta name="theme-color" content="#030605">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fiddlehead">
+<meta property="og:title" content="Fiddlehead — grow your own AI models, watch them learn">
+<meta property="og:description" content="Train, fine-tune and serve small AI models on your own machine, and watch every attention head form while they learn. Open source, MIT.">
+<meta property="og:url" content="https://aniketshukla1.github.io/fiddlehead/">
+<meta property="og:image" content="https://aniketshukla1.github.io/fiddlehead/media/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Fiddlehead: grow your own AI models, watch them unfurl">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Fiddlehead",
+ "description": "An open-source studio for training, fine-tuning and serving your own small AI models, with a live view inside the network while it learns.",
+ "applicationCategory": "DeveloperApplication", "operatingSystem": "macOS, Linux, Windows",
+ "url": "https://aniketshukla1.github.io/fiddlehead/", "downloadUrl": "https://github.com/aniketshukla1/fiddlehead",
+ "license": "https://opensource.org/licenses/MIT", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
+</script>
+<!-- Boot: theme from storage before paint, and the .js class. -->
+<script>try{var t=localStorage.getItem('fiddlehead-site-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add('js')</script>
+<script src="site.js" defer></script>
+<script src="particle-scene.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="bar" aria-label="Main">
+      <a class="brand" href="#top" aria-label="Fiddlehead, back to top">
+        <!-- Five copies of the mark, each a layer deeper: a solid mark that turns in 3D. -->
+        <span class="mark3d" aria-hidden="true"><span class="mark3d-body">
+          <svg class="m-layer" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6.5"/></svg><svg class="m-layer" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6.5"/></svg><svg class="m-layer" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6.5"/></svg><svg class="m-layer" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6.5"/></svg><svg class="m-layer m-top" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6.5"/><path class="m-coil" d="M8.8 21.2C7.3 18.4 6.6 14.6 6.6 9.6L7.0 8.4L7.6 7.4L8.3 6.5L9.2 5.8L10.1 5.3L11.1 5.1L12.1 5.0L13.0 5.1L13.8 5.4L14.5 5.8L15.2 6.3L15.6 6.9L16.0 7.6L16.2 8.2L16.2 8.9L16.2 9.6L16.0 10.1L15.7 10.7L15.3 11.1L14.9 11.4L14.4 11.7L14.0 11.8L13.5 11.9L13.0 11.8L12.6 11.7L12.3 11.5L12.0 11.2L11.7 10.9L11.6 10.6L11.5 10.3L11.4 10.0L11.4 9.6L11.5 9.4L11.7 9.1L11.8 8.9L12.1 8.7"/></svg>
+        </span></span>
+        fiddlehead
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#studio">Studio</a></li>
+        <li><a href="#api">API</a></li>
+        <li><a href="#start">Quickstart</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="button button-github" href="https://github.com/aniketshukla1/fiddlehead">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.7.7 1 1.6 1 2.7 0 3.9-2.3 4.8-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Hero: the thesis. The fiddlehead, made of light, beside it; the real product below. -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="split hero-split">
+        <div class="stack hero-text" data-quiet>
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Open source · MIT · runs on your machine</p>
+          <h1>Grow your own AI models. <span class="accent-word">Watch them unfurl.</span></h1>
+          <p class="lead">An open-source studio for training, fine-tuning and serving your own small AI models — with a live view inside the network while it learns.</p>
+          <div class="actions">
+            <a class="button button-primary" href="#start">Get started<span class="knob-dot" aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="https://github.com/aniketshukla1/fiddlehead">Star on GitHub</a>
+          </div>
+          <ul class="ticks">
+            <li>No GPU required</li>
+            <li>Your data stays on your hardware</li>
+            <li>Text, code, speech and vision</li>
+          </ul>
+        </div>
+        <div class="stage hero-stage">
+          <div class="anchor" data-shape="logo" data-palette="fern" data-hold="anchor" style="inset: 4% 8% 4% 8%" aria-hidden="true"></div>
+          <div class="standin standin-mark" aria-hidden="true"><svg viewBox="4.5 3.2 14 19.6"><path class="coil" d="M8.8 21.2C7.3 18.4 6.6 14.6 6.6 9.6L7.0 8.4L7.6 7.4L8.3 6.5L9.2 5.8L10.1 5.3L11.1 5.1L12.1 5.0L13.0 5.1L13.8 5.4L14.5 5.8L15.2 6.3L15.6 6.9L16.0 7.6L16.2 8.2L16.2 8.9L16.2 9.6L16.0 10.1L15.7 10.7L15.3 11.1L14.9 11.4L14.4 11.7L14.0 11.8L13.5 11.9L13.0 11.8L12.6 11.7L12.3 11.5L12.0 11.2L11.7 10.9L11.6 10.6L11.5 10.3L11.4 10.0L11.4 9.6L11.5 9.4L11.7 9.1L11.8 8.9L12.1 8.7"/><circle class="coil-heart" cx="12.9" cy="9.6" r="1.2"/></svg></div>
+          <p class="tag tag-1"><span class="dot"></span>induction @ step 257</p>
+          <p class="tag tag-2"><span class="dot"></span>0.8M params · copy task</p>
+          <p class="tag tag-3"><span class="dot dot-warn"></span>CPU · no GPU needed</p>
+        </div>
+      </div>
+
+      <figure class="window hero-window">
+        <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><p>Fiddlehead — 23 seconds, start to finish</p></div>
+        <video id="launch" data-autoplay muted playsinline loop preload="metadata" poster="media/launch-poster.jpg" width="1920" height="1080">
+          <source src="media/fiddlehead-launch.mp4" type="video/mp4">
+        </video>
+        <button class="sound" type="button" data-sound="launch" hidden>▶ Watch with sound</button>
+        <figcaption>Pick a recipe, watch a model learn head by head, then serve it as an API. The training run, head labels and API reply are real.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Statement: every model starts as noise. -->
+  <section class="section statement on-night" aria-labelledby="statement-title">
+    <div class="anchor" data-shape="stars" data-palette="noise" style="inset: 0" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow" id="statement-title">Every model starts as noise</p>
+      <p class="statement-text" data-fill>Most training tools hand you a progress bar and a loss number. Fiddlehead shows you what the model is learning while it learns: the loss and gradients streaming in, every attention head drawn and labelled by the behaviour it picks up, and induction circuits lighting up the moment in-context learning appears.</p>
+      <p class="statement-note">The name comes from the young fern frond: a tight spiral of random weights that slowly unfurls into something that understands.</p>
+    </div>
+  </section>
+
+  <div class="horizon" aria-hidden="true"></div>
+
+  <!-- How it works: four steps along a braided path. -->
+  <section class="section sky-dawn" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">From your data to a model you can call, in four steps.</h2>
+      </div>
+      <div class="track" aria-hidden="true">
+        <div class="anchor" data-shape="path" data-palette="dawn" data-fit="width" style="inset: 0 12.5%"></div>
+        <div class="track-line"></div>
+        <span>01</span><span>02</span><span>03</span><span>04</span>
+      </div>
+      <ol class="steps">
+        <li class="card">
+          <h3>Pick a recipe</h3>
+          <p>Autocomplete in your own writing style, a chat assistant, code completion, a style mimic, speech-to-text, a custom voice or an image captioner.</p>
+        </li>
+        <li class="card">
+          <h3>Add your data</h3>
+          <p>Paste text, drop in files and PDFs, point at a folder or URL, crawl a site, or read from S3, GCS, Google Drive or Dropbox. Validation text never leaks into training.</p>
+        </li>
+        <li class="card">
+          <h3>Watch it learn</h3>
+          <p>Loss, gradients and every attention head stream in live. Prompt it mid-training, keep the best checkpoint, or rewind to any saved step.</p>
+        </li>
+        <li class="card">
+          <h3>Ship it as an API</h3>
+          <p>Flip the endpoint switch, create a key, and call your model over HTTP from anywhere. Or download it as a <code>.zip</code>.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- The studio: the loss falling, gradients streaming. -->
+  <section class="section sky-day" id="studio" aria-labelledby="studio-title">
+    <div class="wrap">
+      <div class="split studio-split">
+        <div class="stack section-head">
+          <p class="eyebrow">The studio</p>
+          <h2 id="studio-title">A live instrument panel for one training run.</h2>
+          <p class="lead">Every step streams in: the loss, the real gradient norm and the learning rate, with a marker where a capability emerges.</p>
+        </div>
+        <div class="stage curve-stage">
+          <div class="anchor" data-shape="curve" data-palette="signal" data-hold="anchor" style="inset: 6% 2%" aria-hidden="true"></div>
+          <div class="standin standin-curve" aria-hidden="true"><svg viewBox="0 0 500 300"><path class="axis" d="M18.519 11.667 V278.333 H481.481"/><path class="marker" d="M185.185 11.667 V278.333"/><path class="loss" d="M18.519 57.474 L21.412 48.816 L24.306 54.883 L27.199 55.012 L30.093 60.66 L32.986 53.914 L35.88 41.738 L38.773 49.382 L41.667 44.672 L44.56 53.546 L47.454 53.256 L50.347 56.103 L53.241 74.407 L56.134 49.967 L59.028 52.808 L61.921 51.961 L64.815 71.957 L67.708 71.202 L70.602 61.775 L73.495 56.794 L76.389 48.801 L79.282 52.149 L82.176 47.094 L85.069 59.175 L87.963 51.111 L90.856 51.544 L93.75 62.953 L96.644 40.943 L99.537 52.783 L102.431 46.756 L105.324 64.01 L108.218 64.415 L111.111 59.52 L114.005 55.979 L116.898 47.604 L119.792 50.26 L122.685 56.27 L125.579 60.918 L128.472 56.902 L131.366 40.717 L134.259 61.336 L137.153 52.379 L140.046 51.876 L142.94 71.512 L145.833 57.451 L148.727 45.681 L151.62 77.695 L154.514 60.782 L157.407 57.767 L160.301 63.459 L163.194 49.487 L166.088 53.736 L168.981 66.399 L171.875 43.74 L174.769 45.243 L177.662 43.012 L180.556 39.081 L183.449 50.642 L186.343 57.264 L189.236 79.137 L192.13 69.091 L195.023 87.612 L197.917 92.63 L200.81 105.526 L203.704 108.003 L206.597 108.924 L209.491 98.232 L212.384 129.628 L215.278 129.009 L218.171 119.963 L221.065 115.396 L223.958 126.783 L226.852 149.738 L229.745 158.704 L232.639 143.172 L235.532 155.27 L238.426 162.02 L241.319 152.303 L244.213 155.226 L247.106 164.29 L250 166.53 L252.894 167.919 L255.787 163.727 L258.681 171.416 L261.574 174.167 L264.468 176.288 L267.361 189.108 L270.255 177.666 L273.148 181.879 L276.042 186.464 L278.935 199.751 L281.829 196.355 L284.722 192.721 L287.616 204.941 L290.509 200.652 L293.403 198.151 L296.296 207.413 L299.19 199.476 L302.083 204.095 L304.977 207.332 L307.87 207.27 L310.764 207.753 L313.657 210.307 L316.551 209.438 L319.444 214.381 L322.338 215.061 L325.231 213.826 L328.125 216.537 L331.019 218.75 L333.912 217.273 L336.806 217.502 L339.699 220.933 L342.593 223.029 L345.486 222.184 L348.38 222.986 L351.273 223.936 L354.167 222.387 L357.06 226.323 L359.954 223.938 L362.847 227.949 L365.741 227.921 L368.634 226.618 L371.528 226.521 L374.421 227.423 L377.315 228.63 L380.208 229.401 L383.102 229.868 L385.995 229.766 L388.889 231.211 L391.782 231.032 L394.676 231.047 L397.569 232.202 L400.463 231.561 L403.356 232.187 L406.25 230.608 L409.144 233.189 L412.037 234.513 L414.931 234.747 L417.824 234.563 L420.718 233.597 L423.611 235.55 L426.505 234.848 L429.398 233.164 L432.292 239.274 L435.185 237.584 L438.079 235.983 L440.972 235.99 L443.866 236.408 L446.759 237.498 L449.653 236.238 L452.546 236.917 L455.44 238.163 L458.333 234.394 L461.227 237.321 L464.12 238.688 L467.014 238.23 L469.907 238.54 L472.801 238.459 L475.694 242.144 L478.588 239.282 L481.481 237.408"/></svg></div>
+        </div>
+      </div>
+      <figure class="window shot" data-play>
+        <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><p>Studio · induction-live</p></div>
+        <img src="media/studio.png" width="2880" height="1800" loading="lazy" decoding="async" alt="The Fiddlehead studio during a live run: the loss and gradient-norm curves, sixteen attention heads labelled by behaviour with six induction heads lit, the architecture and the playground.">
+        <p class="chip chip-a"><b>loss 1.679</b><span>at step 355, and falling</span></p>
+        <p class="chip chip-b"><b>induction @ step 257</b><span>6 of 16 heads</span></p>
+        <p class="chip chip-c"><b>73% accuracy</b><span>copying patterns from context</span></p>
+      </figure>
+      <ul class="facts">
+        <li><b>Playground, Eval and Chat.</b> Prompt the model mid-training, run an eval suite as it learns, or hold a streaming conversation with temperature, top-p, top-k and a system prompt.</li>
+        <li><b>Checkpoints.</b> Keep the best evaluation, roll back to it, or rewind training to any saved step.</li>
+        <li><b>Mixture of Experts.</b> Sparse runs get an Experts view showing how the router spreads tokens across experts.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Circuits: attention heads, labelled as they specialise. -->
+  <section class="section sky-day" id="circuits" aria-labelledby="circuits-title">
+    <div class="wrap">
+      <div class="split circuits-split">
+        <div class="stage matrix-stage">
+          <div class="anchor" data-shape="matrix" data-palette="heads" style="inset: 4%" aria-hidden="true"></div>
+          <div class="standin standin-matrix" aria-hidden="true"><svg viewBox="-0.5 -0.5 26.5 26.5"><path class="faint" d="M0 0h0.86v0.86h-0.86zM1 1h0.86v0.86h-0.86zM0 2h0.86v0.86h-0.86zM2 2h0.86v0.86h-0.86zM0 3h0.86v0.86h-0.86zM1 3h0.86v0.86h-0.86zM3 3h0.86v0.86h-0.86zM0 4h0.86v0.86h-0.86zM1 4h0.86v0.86h-0.86zM2 4h0.86v0.86h-0.86zM4 4h0.86v0.86h-0.86zM0 5h0.86v0.86h-0.86zM1 5h0.86v0.86h-0.86zM2 5h0.86v0.86h-0.86zM3 5h0.86v0.86h-0.86zM5 5h0.86v0.86h-0.86zM0 6h0.86v0.86h-0.86zM1 6h0.86v0.86h-0.86zM2 6h0.86v0.86h-0.86zM3 6h0.86v0.86h-0.86zM4 6h0.86v0.86h-0.86zM6 6h0.86v0.86h-0.86zM0 7h0.86v0.86h-0.86zM1 7h0.86v0.86h-0.86zM2 7h0.86v0.86h-0.86zM3 7h0.86v0.86h-0.86zM4 7h0.86v0.86h-0.86zM5 7h0.86v0.86h-0.86zM7 7h0.86v0.86h-0.86zM0 8h0.86v0.86h-0.86zM1 8h0.86v0.86h-0.86zM2 8h0.86v0.86h-0.86zM3 8h0.86v0.86h-0.86zM4 8h0.86v0.86h-0.86zM5 8h0.86v0.86h-0.86zM6 8h0.86v0.86h-0.86zM8 8h0.86v0.86h-0.86zM0 9h0.86v0.86h-0.86zM1 9h0.86v0.86h-0.86zM2 9h0.86v0.86h-0.86zM3 9h0.86v0.86h-0.86zM4 9h0.86v0.86h-0.86zM5 9h0.86v0.86h-0.86zM6 9h0.86v0.86h-0.86zM7 9h0.86v0.86h-0.86zM9 9h0.86v0.86h-0.86zM0 10h0.86v0.86h-0.86zM1 10h0.86v0.86h-0.86zM2 10h0.86v0.86h-0.86zM3 10h0.86v0.86h-0.86zM4 10h0.86v0.86h-0.86zM5 10h0.86v0.86h-0.86zM6 10h0.86v0.86h-0.86zM7 10h0.86v0.86h-0.86zM8 10h0.86v0.86h-0.86zM10 10h0.86v0.86h-0.86zM0 11h0.86v0.86h-0.86zM1 11h0.86v0.86h-0.86zM2 11h0.86v0.86h-0.86zM3 11h0.86v0.86h-0.86zM4 11h0.86v0.86h-0.86zM5 11h0.86v0.86h-0.86zM6 11h0.86v0.86h-0.86zM7 11h0.86v0.86h-0.86zM8 11h0.86v0.86h-0.86zM9 11h0.86v0.86h-0.86zM11 11h0.86v0.86h-0.86z"/><path class="hot" d="M0 1h0.86v0.86h-0.86zM1 2h0.86v0.86h-0.86zM2 3h0.86v0.86h-0.86zM3 4h0.86v0.86h-0.86zM4 5h0.86v0.86h-0.86zM5 6h0.86v0.86h-0.86zM6 7h0.86v0.86h-0.86zM7 8h0.86v0.86h-0.86zM8 9h0.86v0.86h-0.86zM9 10h0.86v0.86h-0.86zM10 11h0.86v0.86h-0.86z"/><path class="faint" d="M13.6 1h0.86v0.86h-0.86zM13.6 2h0.86v0.86h-0.86zM14.6 2h0.86v0.86h-0.86zM13.6 3h0.86v0.86h-0.86zM14.6 3h0.86v0.86h-0.86zM15.6 3h0.86v0.86h-0.86zM13.6 4h0.86v0.86h-0.86zM14.6 4h0.86v0.86h-0.86zM15.6 4h0.86v0.86h-0.86zM16.6 4h0.86v0.86h-0.86zM13.6 5h0.86v0.86h-0.86zM14.6 5h0.86v0.86h-0.86zM15.6 5h0.86v0.86h-0.86zM16.6 5h0.86v0.86h-0.86zM17.6 5h0.86v0.86h-0.86zM13.6 6h0.86v0.86h-0.86zM14.6 6h0.86v0.86h-0.86zM15.6 6h0.86v0.86h-0.86zM16.6 6h0.86v0.86h-0.86zM17.6 6h0.86v0.86h-0.86zM18.6 6h0.86v0.86h-0.86zM13.6 7h0.86v0.86h-0.86zM14.6 7h0.86v0.86h-0.86zM15.6 7h0.86v0.86h-0.86zM16.6 7h0.86v0.86h-0.86zM17.6 7h0.86v0.86h-0.86zM18.6 7h0.86v0.86h-0.86zM19.6 7h0.86v0.86h-0.86zM13.6 8h0.86v0.86h-0.86zM14.6 8h0.86v0.86h-0.86zM15.6 8h0.86v0.86h-0.86zM16.6 8h0.86v0.86h-0.86zM17.6 8h0.86v0.86h-0.86zM18.6 8h0.86v0.86h-0.86zM19.6 8h0.86v0.86h-0.86zM20.6 8h0.86v0.86h-0.86zM13.6 9h0.86v0.86h-0.86zM14.6 9h0.86v0.86h-0.86zM15.6 9h0.86v0.86h-0.86zM16.6 9h0.86v0.86h-0.86zM17.6 9h0.86v0.86h-0.86zM18.6 9h0.86v0.86h-0.86zM19.6 9h0.86v0.86h-0.86zM20.6 9h0.86v0.86h-0.86zM21.6 9h0.86v0.86h-0.86zM13.6 10h0.86v0.86h-0.86zM14.6 10h0.86v0.86h-0.86zM15.6 10h0.86v0.86h-0.86zM16.6 10h0.86v0.86h-0.86zM17.6 10h0.86v0.86h-0.86zM18.6 10h0.86v0.86h-0.86zM19.6 10h0.86v0.86h-0.86zM20.6 10h0.86v0.86h-0.86zM21.6 10h0.86v0.86h-0.86zM22.6 10h0.86v0.86h-0.86zM13.6 11h0.86v0.86h-0.86zM14.6 11h0.86v0.86h-0.86zM15.6 11h0.86v0.86h-0.86zM16.6 11h0.86v0.86h-0.86zM17.6 11h0.86v0.86h-0.86zM18.6 11h0.86v0.86h-0.86zM19.6 11h0.86v0.86h-0.86zM20.6 11h0.86v0.86h-0.86zM21.6 11h0.86v0.86h-0.86zM22.6 11h0.86v0.86h-0.86zM23.6 11h0.86v0.86h-0.86z"/><path class="hot" d="M13.6 0h0.86v0.86h-0.86zM14.6 1h0.86v0.86h-0.86zM15.6 2h0.86v0.86h-0.86zM16.6 3h0.86v0.86h-0.86zM17.6 4h0.86v0.86h-0.86zM18.6 5h0.86v0.86h-0.86zM19.6 6h0.86v0.86h-0.86zM20.6 7h0.86v0.86h-0.86zM21.6 8h0.86v0.86h-0.86zM22.6 9h0.86v0.86h-0.86zM23.6 10h0.86v0.86h-0.86zM24.6 11h0.86v0.86h-0.86z"/><path class="faint" d="M0 13.6h0.86v0.86h-0.86zM1 14.6h0.86v0.86h-0.86zM1 15.6h0.86v0.86h-0.86zM2 15.6h0.86v0.86h-0.86zM1 16.6h0.86v0.86h-0.86zM2 16.6h0.86v0.86h-0.86zM3 16.6h0.86v0.86h-0.86zM1 17.6h0.86v0.86h-0.86zM2 17.6h0.86v0.86h-0.86zM3 17.6h0.86v0.86h-0.86zM4 17.6h0.86v0.86h-0.86zM1 18.6h0.86v0.86h-0.86zM2 18.6h0.86v0.86h-0.86zM3 18.6h0.86v0.86h-0.86zM4 18.6h0.86v0.86h-0.86zM5 18.6h0.86v0.86h-0.86zM1 19.6h0.86v0.86h-0.86zM2 19.6h0.86v0.86h-0.86zM3 19.6h0.86v0.86h-0.86zM4 19.6h0.86v0.86h-0.86zM5 19.6h0.86v0.86h-0.86zM6 19.6h0.86v0.86h-0.86zM1 20.6h0.86v0.86h-0.86zM2 20.6h0.86v0.86h-0.86zM3 20.6h0.86v0.86h-0.86zM4 20.6h0.86v0.86h-0.86zM5 20.6h0.86v0.86h-0.86zM6 20.6h0.86v0.86h-0.86zM7 20.6h0.86v0.86h-0.86zM1 21.6h0.86v0.86h-0.86zM2 21.6h0.86v0.86h-0.86zM3 21.6h0.86v0.86h-0.86zM4 21.6h0.86v0.86h-0.86zM5 21.6h0.86v0.86h-0.86zM6 21.6h0.86v0.86h-0.86zM7 21.6h0.86v0.86h-0.86zM8 21.6h0.86v0.86h-0.86zM1 22.6h0.86v0.86h-0.86zM2 22.6h0.86v0.86h-0.86zM3 22.6h0.86v0.86h-0.86zM4 22.6h0.86v0.86h-0.86zM5 22.6h0.86v0.86h-0.86zM6 22.6h0.86v0.86h-0.86zM7 22.6h0.86v0.86h-0.86zM8 22.6h0.86v0.86h-0.86zM9 22.6h0.86v0.86h-0.86zM1 23.6h0.86v0.86h-0.86zM2 23.6h0.86v0.86h-0.86zM3 23.6h0.86v0.86h-0.86zM4 23.6h0.86v0.86h-0.86zM5 23.6h0.86v0.86h-0.86zM6 23.6h0.86v0.86h-0.86zM7 23.6h0.86v0.86h-0.86zM8 23.6h0.86v0.86h-0.86zM9 23.6h0.86v0.86h-0.86zM10 23.6h0.86v0.86h-0.86zM1 24.6h0.86v0.86h-0.86zM2 24.6h0.86v0.86h-0.86zM3 24.6h0.86v0.86h-0.86zM4 24.6h0.86v0.86h-0.86zM5 24.6h0.86v0.86h-0.86zM6 24.6h0.86v0.86h-0.86zM7 24.6h0.86v0.86h-0.86zM8 24.6h0.86v0.86h-0.86zM9 24.6h0.86v0.86h-0.86zM10 24.6h0.86v0.86h-0.86zM11 24.6h0.86v0.86h-0.86z"/><path class="hot" d="M0 14.6h0.86v0.86h-0.86zM0 15.6h0.86v0.86h-0.86zM0 16.6h0.86v0.86h-0.86zM0 17.6h0.86v0.86h-0.86zM0 18.6h0.86v0.86h-0.86zM0 19.6h0.86v0.86h-0.86zM0 20.6h0.86v0.86h-0.86zM0 21.6h0.86v0.86h-0.86zM0 22.6h0.86v0.86h-0.86zM0 23.6h0.86v0.86h-0.86zM0 24.6h0.86v0.86h-0.86z"/><path class="faint" d="M13.6 13.6h0.86v0.86h-0.86zM13.6 14.6h0.86v0.86h-0.86zM14.6 14.6h0.86v0.86h-0.86zM13.6 15.6h0.86v0.86h-0.86zM14.6 15.6h0.86v0.86h-0.86zM15.6 15.6h0.86v0.86h-0.86zM13.6 16.6h0.86v0.86h-0.86zM14.6 16.6h0.86v0.86h-0.86zM15.6 16.6h0.86v0.86h-0.86zM16.6 16.6h0.86v0.86h-0.86zM13.6 17.6h0.86v0.86h-0.86zM14.6 17.6h0.86v0.86h-0.86zM15.6 17.6h0.86v0.86h-0.86zM16.6 17.6h0.86v0.86h-0.86zM17.6 17.6h0.86v0.86h-0.86zM13.6 18.6h0.86v0.86h-0.86zM15.6 18.6h0.86v0.86h-0.86zM16.6 18.6h0.86v0.86h-0.86zM17.6 18.6h0.86v0.86h-0.86zM18.6 18.6h0.86v0.86h-0.86zM13.6 19.6h0.86v0.86h-0.86zM14.6 19.6h0.86v0.86h-0.86zM16.6 19.6h0.86v0.86h-0.86zM17.6 19.6h0.86v0.86h-0.86zM18.6 19.6h0.86v0.86h-0.86zM19.6 19.6h0.86v0.86h-0.86zM13.6 20.6h0.86v0.86h-0.86zM14.6 20.6h0.86v0.86h-0.86zM15.6 20.6h0.86v0.86h-0.86zM17.6 20.6h0.86v0.86h-0.86zM18.6 20.6h0.86v0.86h-0.86zM19.6 20.6h0.86v0.86h-0.86zM20.6 20.6h0.86v0.86h-0.86zM13.6 21.6h0.86v0.86h-0.86zM14.6 21.6h0.86v0.86h-0.86zM15.6 21.6h0.86v0.86h-0.86zM16.6 21.6h0.86v0.86h-0.86zM18.6 21.6h0.86v0.86h-0.86zM19.6 21.6h0.86v0.86h-0.86zM20.6 21.6h0.86v0.86h-0.86zM21.6 21.6h0.86v0.86h-0.86zM13.6 22.6h0.86v0.86h-0.86zM14.6 22.6h0.86v0.86h-0.86zM15.6 22.6h0.86v0.86h-0.86zM16.6 22.6h0.86v0.86h-0.86zM17.6 22.6h0.86v0.86h-0.86zM19.6 22.6h0.86v0.86h-0.86zM20.6 22.6h0.86v0.86h-0.86zM21.6 22.6h0.86v0.86h-0.86zM22.6 22.6h0.86v0.86h-0.86zM13.6 23.6h0.86v0.86h-0.86zM14.6 23.6h0.86v0.86h-0.86zM15.6 23.6h0.86v0.86h-0.86zM16.6 23.6h0.86v0.86h-0.86zM17.6 23.6h0.86v0.86h-0.86zM18.6 23.6h0.86v0.86h-0.86zM20.6 23.6h0.86v0.86h-0.86zM21.6 23.6h0.86v0.86h-0.86zM22.6 23.6h0.86v0.86h-0.86zM23.6 23.6h0.86v0.86h-0.86zM13.6 24.6h0.86v0.86h-0.86zM14.6 24.6h0.86v0.86h-0.86zM15.6 24.6h0.86v0.86h-0.86zM16.6 24.6h0.86v0.86h-0.86zM17.6 24.6h0.86v0.86h-0.86zM18.6 24.6h0.86v0.86h-0.86zM19.6 24.6h0.86v0.86h-0.86zM21.6 24.6h0.86v0.86h-0.86zM22.6 24.6h0.86v0.86h-0.86zM23.6 24.6h0.86v0.86h-0.86zM24.6 24.6h0.86v0.86h-0.86z"/><path class="hot hot-induction" d="M14.6 18.6h0.86v0.86h-0.86zM15.6 19.6h0.86v0.86h-0.86zM16.6 20.6h0.86v0.86h-0.86zM17.6 21.6h0.86v0.86h-0.86zM18.6 22.6h0.86v0.86h-0.86zM19.6 23.6h0.86v0.86h-0.86zM20.6 24.6h0.86v0.86h-0.86z"/></svg></div>
+        </div>
+        <div class="stack">
+          <div class="section-head stack">
+            <p class="eyebrow">Attention circuitry</p>
+            <h2 id="circuits-title">Watch every head find its job.</h2>
+            <p class="lead">Each head is drawn live and labelled by the behaviour it picks up. When in-context learning forms, the induction heads light up.</p>
+          </div>
+          <ul class="heads">
+            <li class="card head"><svg class="mini" viewBox="-0.3 -0.3 12.46 12.46" aria-hidden="true"><path class="faint" d="M0 0h0.86v0.86h-0.86zM1 1h0.86v0.86h-0.86zM0 2h0.86v0.86h-0.86zM2 2h0.86v0.86h-0.86zM0 3h0.86v0.86h-0.86zM1 3h0.86v0.86h-0.86zM3 3h0.86v0.86h-0.86zM0 4h0.86v0.86h-0.86zM1 4h0.86v0.86h-0.86zM2 4h0.86v0.86h-0.86zM4 4h0.86v0.86h-0.86zM0 5h0.86v0.86h-0.86zM1 5h0.86v0.86h-0.86zM2 5h0.86v0.86h-0.86zM3 5h0.86v0.86h-0.86zM5 5h0.86v0.86h-0.86zM0 6h0.86v0.86h-0.86zM1 6h0.86v0.86h-0.86zM2 6h0.86v0.86h-0.86zM3 6h0.86v0.86h-0.86zM4 6h0.86v0.86h-0.86zM6 6h0.86v0.86h-0.86zM0 7h0.86v0.86h-0.86zM1 7h0.86v0.86h-0.86zM2 7h0.86v0.86h-0.86zM3 7h0.86v0.86h-0.86zM4 7h0.86v0.86h-0.86zM5 7h0.86v0.86h-0.86zM7 7h0.86v0.86h-0.86zM0 8h0.86v0.86h-0.86zM1 8h0.86v0.86h-0.86zM2 8h0.86v0.86h-0.86zM3 8h0.86v0.86h-0.86zM4 8h0.86v0.86h-0.86zM5 8h0.86v0.86h-0.86zM6 8h0.86v0.86h-0.86zM8 8h0.86v0.86h-0.86zM0 9h0.86v0.86h-0.86zM1 9h0.86v0.86h-0.86zM2 9h0.86v0.86h-0.86zM3 9h0.86v0.86h-0.86zM4 9h0.86v0.86h-0.86zM5 9h0.86v0.86h-0.86zM6 9h0.86v0.86h-0.86zM7 9h0.86v0.86h-0.86zM9 9h0.86v0.86h-0.86zM0 10h0.86v0.86h-0.86zM1 10h0.86v0.86h-0.86zM2 10h0.86v0.86h-0.86zM3 10h0.86v0.86h-0.86zM4 10h0.86v0.86h-0.86zM5 10h0.86v0.86h-0.86zM6 10h0.86v0.86h-0.86zM7 10h0.86v0.86h-0.86zM8 10h0.86v0.86h-0.86zM10 10h0.86v0.86h-0.86zM0 11h0.86v0.86h-0.86zM1 11h0.86v0.86h-0.86zM2 11h0.86v0.86h-0.86zM3 11h0.86v0.86h-0.86zM4 11h0.86v0.86h-0.86zM5 11h0.86v0.86h-0.86zM6 11h0.86v0.86h-0.86zM7 11h0.86v0.86h-0.86zM8 11h0.86v0.86h-0.86zM9 11h0.86v0.86h-0.86zM11 11h0.86v0.86h-0.86z"/><path class="hot" d="M0 1h0.86v0.86h-0.86zM1 2h0.86v0.86h-0.86zM2 3h0.86v0.86h-0.86zM3 4h0.86v0.86h-0.86zM4 5h0.86v0.86h-0.86zM5 6h0.86v0.86h-0.86zM6 7h0.86v0.86h-0.86zM7 8h0.86v0.86h-0.86zM8 9h0.86v0.86h-0.86zM9 10h0.86v0.86h-0.86zM10 11h0.86v0.86h-0.86z"/></svg><div><h3>Previous token</h3><p>Looks one step back. The building block of reading in order.</p></div></li>
+            <li class="card head"><svg class="mini" viewBox="-0.3 -0.3 12.46 12.46" aria-hidden="true"><path class="faint" d="M0 1h0.86v0.86h-0.86zM0 2h0.86v0.86h-0.86zM1 2h0.86v0.86h-0.86zM0 3h0.86v0.86h-0.86zM1 3h0.86v0.86h-0.86zM2 3h0.86v0.86h-0.86zM0 4h0.86v0.86h-0.86zM1 4h0.86v0.86h-0.86zM2 4h0.86v0.86h-0.86zM3 4h0.86v0.86h-0.86zM0 5h0.86v0.86h-0.86zM1 5h0.86v0.86h-0.86zM2 5h0.86v0.86h-0.86zM3 5h0.86v0.86h-0.86zM4 5h0.86v0.86h-0.86zM0 6h0.86v0.86h-0.86zM1 6h0.86v0.86h-0.86zM2 6h0.86v0.86h-0.86zM3 6h0.86v0.86h-0.86zM4 6h0.86v0.86h-0.86zM5 6h0.86v0.86h-0.86zM0 7h0.86v0.86h-0.86zM1 7h0.86v0.86h-0.86zM2 7h0.86v0.86h-0.86zM3 7h0.86v0.86h-0.86zM4 7h0.86v0.86h-0.86zM5 7h0.86v0.86h-0.86zM6 7h0.86v0.86h-0.86zM0 8h0.86v0.86h-0.86zM1 8h0.86v0.86h-0.86zM2 8h0.86v0.86h-0.86zM3 8h0.86v0.86h-0.86zM4 8h0.86v0.86h-0.86zM5 8h0.86v0.86h-0.86zM6 8h0.86v0.86h-0.86zM7 8h0.86v0.86h-0.86zM0 9h0.86v0.86h-0.86zM1 9h0.86v0.86h-0.86zM2 9h0.86v0.86h-0.86zM3 9h0.86v0.86h-0.86zM4 9h0.86v0.86h-0.86zM5 9h0.86v0.86h-0.86zM6 9h0.86v0.86h-0.86zM7 9h0.86v0.86h-0.86zM8 9h0.86v0.86h-0.86zM0 10h0.86v0.86h-0.86zM1 10h0.86v0.86h-0.86zM2 10h0.86v0.86h-0.86zM3 10h0.86v0.86h-0.86zM4 10h0.86v0.86h-0.86zM5 10h0.86v0.86h-0.86zM6 10h0.86v0.86h-0.86zM7 10h0.86v0.86h-0.86zM8 10h0.86v0.86h-0.86zM9 10h0.86v0.86h-0.86zM0 11h0.86v0.86h-0.86zM1 11h0.86v0.86h-0.86zM2 11h0.86v0.86h-0.86zM3 11h0.86v0.86h-0.86zM4 11h0.86v0.86h-0.86zM5 11h0.86v0.86h-0.86zM6 11h0.86v0.86h-0.86zM7 11h0.86v0.86h-0.86zM8 11h0.86v0.86h-0.86zM9 11h0.86v0.86h-0.86zM10 11h0.86v0.86h-0.86z"/><path class="hot" d="M0 0h0.86v0.86h-0.86zM1 1h0.86v0.86h-0.86zM2 2h0.86v0.86h-0.86zM3 3h0.86v0.86h-0.86zM4 4h0.86v0.86h-0.86zM5 5h0.86v0.86h-0.86zM6 6h0.86v0.86h-0.86zM7 7h0.86v0.86h-0.86zM8 8h0.86v0.86h-0.86zM9 9h0.86v0.86h-0.86zM10 10h0.86v0.86h-0.86zM11 11h0.86v0.86h-0.86z"/></svg><div><h3>Positional</h3><p>Stays on its own token, holding position.</p></div></li>
+            <li class="card head"><svg class="mini" viewBox="-0.3 -0.3 12.46 12.46" aria-hidden="true"><path class="faint" d="M0 0h0.86v0.86h-0.86zM1 1h0.86v0.86h-0.86zM1 2h0.86v0.86h-0.86zM2 2h0.86v0.86h-0.86zM1 3h0.86v0.86h-0.86zM2 3h0.86v0.86h-0.86zM3 3h0.86v0.86h-0.86zM1 4h0.86v0.86h-0.86zM2 4h0.86v0.86h-0.86zM3 4h0.86v0.86h-0.86zM4 4h0.86v0.86h-0.86zM1 5h0.86v0.86h-0.86zM2 5h0.86v0.86h-0.86zM3 5h0.86v0.86h-0.86zM4 5h0.86v0.86h-0.86zM5 5h0.86v0.86h-0.86zM1 6h0.86v0.86h-0.86zM2 6h0.86v0.86h-0.86zM3 6h0.86v0.86h-0.86zM4 6h0.86v0.86h-0.86zM5 6h0.86v0.86h-0.86zM6 6h0.86v0.86h-0.86zM1 7h0.86v0.86h-0.86zM2 7h0.86v0.86h-0.86zM3 7h0.86v0.86h-0.86zM4 7h0.86v0.86h-0.86zM5 7h0.86v0.86h-0.86zM6 7h0.86v0.86h-0.86zM7 7h0.86v0.86h-0.86zM1 8h0.86v0.86h-0.86zM2 8h0.86v0.86h-0.86zM3 8h0.86v0.86h-0.86zM4 8h0.86v0.86h-0.86zM5 8h0.86v0.86h-0.86zM6 8h0.86v0.86h-0.86zM7 8h0.86v0.86h-0.86zM8 8h0.86v0.86h-0.86zM1 9h0.86v0.86h-0.86zM2 9h0.86v0.86h-0.86zM3 9h0.86v0.86h-0.86zM4 9h0.86v0.86h-0.86zM5 9h0.86v0.86h-0.86zM6 9h0.86v0.86h-0.86zM7 9h0.86v0.86h-0.86zM8 9h0.86v0.86h-0.86zM9 9h0.86v0.86h-0.86zM1 10h0.86v0.86h-0.86zM2 10h0.86v0.86h-0.86zM3 10h0.86v0.86h-0.86zM4 10h0.86v0.86h-0.86zM5 10h0.86v0.86h-0.86zM6 10h0.86v0.86h-0.86zM7 10h0.86v0.86h-0.86zM8 10h0.86v0.86h-0.86zM9 10h0.86v0.86h-0.86zM10 10h0.86v0.86h-0.86zM1 11h0.86v0.86h-0.86zM2 11h0.86v0.86h-0.86zM3 11h0.86v0.86h-0.86zM4 11h0.86v0.86h-0.86zM5 11h0.86v0.86h-0.86zM6 11h0.86v0.86h-0.86zM7 11h0.86v0.86h-0.86zM8 11h0.86v0.86h-0.86zM9 11h0.86v0.86h-0.86zM10 11h0.86v0.86h-0.86zM11 11h0.86v0.86h-0.86z"/><path class="hot" d="M0 1h0.86v0.86h-0.86zM0 2h0.86v0.86h-0.86zM0 3h0.86v0.86h-0.86zM0 4h0.86v0.86h-0.86zM0 5h0.86v0.86h-0.86zM0 6h0.86v0.86h-0.86zM0 7h0.86v0.86h-0.86zM0 8h0.86v0.86h-0.86zM0 9h0.86v0.86h-0.86zM0 10h0.86v0.86h-0.86zM0 11h0.86v0.86h-0.86z"/></svg><div><h3>Attention sink</h3><p>Parks its spare attention on the very first token.</p></div></li>
+            <li class="card head head-induction"><svg class="mini" viewBox="-0.3 -0.3 12.46 12.46" aria-hidden="true"><path class="faint" d="M0 0h0.86v0.86h-0.86zM0 1h0.86v0.86h-0.86zM1 1h0.86v0.86h-0.86zM0 2h0.86v0.86h-0.86zM1 2h0.86v0.86h-0.86zM2 2h0.86v0.86h-0.86zM0 3h0.86v0.86h-0.86zM1 3h0.86v0.86h-0.86zM2 3h0.86v0.86h-0.86zM3 3h0.86v0.86h-0.86zM0 4h0.86v0.86h-0.86zM1 4h0.86v0.86h-0.86zM2 4h0.86v0.86h-0.86zM3 4h0.86v0.86h-0.86zM4 4h0.86v0.86h-0.86zM0 5h0.86v0.86h-0.86zM2 5h0.86v0.86h-0.86zM3 5h0.86v0.86h-0.86zM4 5h0.86v0.86h-0.86zM5 5h0.86v0.86h-0.86zM0 6h0.86v0.86h-0.86zM1 6h0.86v0.86h-0.86zM3 6h0.86v0.86h-0.86zM4 6h0.86v0.86h-0.86zM5 6h0.86v0.86h-0.86zM6 6h0.86v0.86h-0.86zM0 7h0.86v0.86h-0.86zM1 7h0.86v0.86h-0.86zM2 7h0.86v0.86h-0.86zM4 7h0.86v0.86h-0.86zM5 7h0.86v0.86h-0.86zM6 7h0.86v0.86h-0.86zM7 7h0.86v0.86h-0.86zM0 8h0.86v0.86h-0.86zM1 8h0.86v0.86h-0.86zM2 8h0.86v0.86h-0.86zM3 8h0.86v0.86h-0.86zM5 8h0.86v0.86h-0.86zM6 8h0.86v0.86h-0.86zM7 8h0.86v0.86h-0.86zM8 8h0.86v0.86h-0.86zM0 9h0.86v0.86h-0.86zM1 9h0.86v0.86h-0.86zM2 9h0.86v0.86h-0.86zM3 9h0.86v0.86h-0.86zM4 9h0.86v0.86h-0.86zM6 9h0.86v0.86h-0.86zM7 9h0.86v0.86h-0.86zM8 9h0.86v0.86h-0.86zM9 9h0.86v0.86h-0.86zM0 10h0.86v0.86h-0.86zM1 10h0.86v0.86h-0.86zM2 10h0.86v0.86h-0.86zM3 10h0.86v0.86h-0.86zM4 10h0.86v0.86h-0.86zM5 10h0.86v0.86h-0.86zM7 10h0.86v0.86h-0.86zM8 10h0.86v0.86h-0.86zM9 10h0.86v0.86h-0.86zM10 10h0.86v0.86h-0.86zM0 11h0.86v0.86h-0.86zM1 11h0.86v0.86h-0.86zM2 11h0.86v0.86h-0.86zM3 11h0.86v0.86h-0.86zM4 11h0.86v0.86h-0.86zM5 11h0.86v0.86h-0.86zM6 11h0.86v0.86h-0.86zM8 11h0.86v0.86h-0.86zM9 11h0.86v0.86h-0.86zM10 11h0.86v0.86h-0.86zM11 11h0.86v0.86h-0.86z"/><path class="hot hot-induction" d="M1 5h0.86v0.86h-0.86zM2 6h0.86v0.86h-0.86zM3 7h0.86v0.86h-0.86zM4 8h0.86v0.86h-0.86zM5 9h0.86v0.86h-0.86zM6 10h0.86v0.86h-0.86zM7 11h0.86v0.86h-0.86z"/></svg><div><h3>Induction</h3><p>Finds the last time this token appeared and looks at what came next: <code>[A][B] … [A] → [B]</code>.</p></div></li>
+          </ul>
+          <p class="note"><b>Click any head to switch it off</b> and watch the loss and the samples change — a live causal experiment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ship it: one switch turns the model into an API. -->
+  <section class="section sky-day" id="api" aria-labelledby="api-title">
+    <div class="wrap">
+      <div class="split api-split">
+        <div class="stack">
+          <div class="section-head stack">
+            <p class="eyebrow">Serve it</p>
+            <h2 id="api-title">One switch turns a model into an API.</h2>
+            <p class="lead">Save a model in the studio, switch its endpoint on in Models, create a key, and call it from anywhere.</p>
+          </div>
+          <div class="code card">
+            <div class="code-bar"><span>curl</span><button class="copy" type="button" data-copy="curl-code" hidden>Copy</button></div>
+<pre id="curl-code"><code>curl http://localhost:8000/v1/my-model/generate \
+  -H "Authorization: Bearer sk-YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Once upon a time", "max_new_tokens": 80}'</code></pre>
+            <div class="code-bar code-bar-sub"><span>response</span></div>
+<pre><code>{ "model": "my-model", "prompt": "Once upon a time",
+  "text": "…", "latency_ms": 128 }</code></pre>
+          </div>
+          <p class="note">Prefer no API server at all? Any saved model runs standalone: <code>python serve.py my-model --port 8770</code></p>
+        </div>
+        <div class="stage frond-stage">
+          <div class="anchor" data-shape="frond" data-palette="frond" style="inset: 2% 10%" aria-hidden="true"></div>
+          <div class="standin standin-frond" aria-hidden="true"><svg viewBox="70 0 230 320"><g class="leaves"><ellipse cx="140.64" cy="287.77" rx="10.75" ry="3.23" transform="rotate(212.52 140.64 287.77)"/><ellipse cx="158.77" cy="287.77" rx="10.75" ry="3.23" transform="rotate(-32.52 158.77 287.77)"/><ellipse cx="134.96" cy="269.99" rx="17.71" ry="5.31" transform="rotate(213.51 134.96 269.99)"/><ellipse cx="164.5" cy="269.99" rx="17.71" ry="5.31" transform="rotate(-33.51 164.5 269.99)"/><ellipse cx="130.51" cy="252.54" rx="23.72" ry="7.12" transform="rotate(214.5 130.51 252.54)"/><ellipse cx="169.61" cy="252.54" rx="23.72" ry="7.12" transform="rotate(-34.5 169.61 252.54)"/><ellipse cx="127.12" cy="235.39" rx="28.95" ry="8.68" transform="rotate(215.49 127.12 235.39)"/><ellipse cx="174.26" cy="235.39" rx="28.95" ry="8.68" transform="rotate(-35.49 174.26 235.39)"/><ellipse cx="124.78" cy="218.55" rx="33.4" ry="10.02" transform="rotate(216.48 124.78 218.55)"/><ellipse cx="178.49" cy="218.55" rx="33.4" ry="10.02" transform="rotate(-36.48 178.49 218.55)"/><ellipse cx="123.49" cy="202.09" rx="37.04" ry="11.11" transform="rotate(217.47 123.49 202.09)"/><ellipse cx="182.28" cy="202.09" rx="37.04" ry="11.11" transform="rotate(-37.47 182.28 202.09)"/><ellipse cx="123.27" cy="186.07" rx="39.81" ry="11.94" transform="rotate(218.46 123.27 186.07)"/><ellipse cx="185.62" cy="186.07" rx="39.81" ry="11.94" transform="rotate(-38.46 185.62 186.07)"/><ellipse cx="124.12" cy="170.56" rx="41.69" ry="12.51" transform="rotate(219.45 124.12 170.56)"/><ellipse cx="188.5" cy="170.56" rx="41.69" ry="12.51" transform="rotate(-39.45 188.5 170.56)"/><ellipse cx="126.04" cy="155.61" rx="42.63" ry="12.79" transform="rotate(220.44 126.04 155.61)"/><ellipse cx="190.93" cy="155.61" rx="42.63" ry="12.79" transform="rotate(-40.44 190.93 155.61)"/><ellipse cx="129" cy="141.27" rx="42.63" ry="12.79" transform="rotate(221.43 129 141.27)"/><ellipse cx="192.93" cy="141.27" rx="42.63" ry="12.79" transform="rotate(-41.43 192.93 141.27)"/><ellipse cx="132.98" cy="127.57" rx="41.69" ry="12.51" transform="rotate(222.42 132.98 127.57)"/><ellipse cx="194.53" cy="127.57" rx="41.69" ry="12.51" transform="rotate(-42.42 194.53 127.57)"/><ellipse cx="137.93" cy="114.54" rx="39.81" ry="11.94" transform="rotate(223.42 137.93 114.54)"/><ellipse cx="195.77" cy="114.54" rx="39.81" ry="11.94" transform="rotate(-43.42 195.77 114.54)"/><ellipse cx="143.8" cy="102.2" rx="37.04" ry="11.11" transform="rotate(224.41 143.8 102.2)"/><ellipse cx="196.71" cy="102.2" rx="37.04" ry="11.11" transform="rotate(-44.41 196.71 102.2)"/><ellipse cx="150.52" cy="90.55" rx="33.4" ry="10.02" transform="rotate(225.4 150.52 90.55)"/><ellipse cx="197.42" cy="90.55" rx="33.4" ry="10.02" transform="rotate(-45.4 197.42 90.55)"/><ellipse cx="158.02" cy="79.59" rx="28.95" ry="8.68" transform="rotate(226.39 158.02 79.59)"/><ellipse cx="197.96" cy="79.59" rx="28.95" ry="8.68" transform="rotate(-46.39 197.96 79.59)"/><ellipse cx="166.25" cy="69.31" rx="23.72" ry="7.12" transform="rotate(227.38 166.25 69.31)"/><ellipse cx="198.38" cy="69.31" rx="23.72" ry="7.12" transform="rotate(-47.38 198.38 69.31)"/><ellipse cx="175.18" cy="59.74" rx="17.71" ry="5.31" transform="rotate(228.37 175.18 59.74)"/><ellipse cx="198.72" cy="59.74" rx="17.71" ry="5.31" transform="rotate(-48.37 198.72 59.74)"/></g><path class="stem" d="M150 307.5 L149.81 300.52 L149.71 293.55 L149.68 286.57 L149.73 279.6 L149.86 272.62 L150.07 265.65 L150.35 258.68 L150.72 251.7 L151.16 244.72 L151.69 237.75 L152.29 230.78 L152.97 223.8 L153.73 216.82 L154.57 209.85 L155.48 202.88 L156.48 195.9 L157.55 188.93 L158.71 181.95 L159.94 174.98 L161.25 168 L162.64 161.02 L164.11 154.05 L165.65 147.08 L167.28 140.1 L168.98 133.12 L170.77 126.15 L172.63 119.17 L174.57 112.2 L176.59 105.23 L178.69 98.25 L180.86 91.27 L183.12 84.3 L185.45 77.33 L187.87 70.35 L190.36 63.37 L192.93 56.4 L195.58 49.42 L198.31 42.45 L201.11 35.47 L204 28.5"/><path class="curl" d="M207 28.5 L206.55 26.52 L205.84 24.66 L204.92 22.95 L203.79 21.42 L202.5 20.08 L201.07 18.95 L199.54 18.04 L197.93 17.36 L196.28 16.92 L194.62 16.71 L192.99 16.72 L191.4 16.95 L189.9 17.37 L188.49 17.99 L187.21 18.77 L186.07 19.7 L185.09 20.75 L184.28 21.89 L183.64 23.11 L183.18 24.38 L182.91 25.67 L182.81 26.95 L182.88 28.21 L183.12 29.42 L183.51 30.56 L184.04 31.62 L184.7 32.58 L185.46 33.42 L186.3 34.13 L187.22 34.71 L188.18 35.15 L189.18 35.46 L190.18 35.62 L191.17 35.64 L192.14 35.53 L193.06 35.3 L193.93 34.96 L194.72 34.5 L195.43 33.96 L196.05 33.35 L196.56 32.66 L196.97 31.94 L197.28 31.18 L197.47 30.4 L197.55 29.62 L197.53 28.85 L197.41 28.11 L197.2 27.41 L196.9 26.76 L196.52 26.16 L196.07 25.64 L195.57 25.19 L195.03 24.82 L194.45 24.53 L193.85 24.33 L193.24 24.21 L192.64 24.18 L192.05 24.22 L191.49 24.35 L190.95 24.54 L190.46 24.8 L190.02 25.11 L189.63 25.48 L189.31 25.88 L189.04 26.32 L188.84 26.77 L188.71 27.24 L188.65 27.71 L188.64 28.18 L188.7 28.63 L188.82 29.06 L188.99 29.46 L189.21 29.83 L189.47 30.16 L189.77 30.44 L190.09 30.68 L190.44 30.86 L190.79 31 L191.16 31.08"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Everything else: the numbers and the rest of the kit. -->
+  <section class="section sky-day kit" aria-labelledby="kit-title">
+    <div class="anchor" data-shape="stars" data-palette="dust" style="inset: 0" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What you get</p>
+        <h2 id="kit-title">Small models, the whole workflow.</h2>
+      </div>
+      <dl class="numbers" data-play>
+        <div><dt><span data-count-to="0">0</span></dt><dd><b>GPUs needed to start.</b> Training runs on your CPU, and uses an NVIDIA GPU automatically when there is one.</dd></div>
+        <div><dt><span data-count-to="6">6</span></dt><dd><b>open model families to fine-tune.</b> GPT-2, DistilGPT-2, SmolLM, Pythia, Qwen2.5 and TinyLlama, with LoRA or a full fine-tune.</dd></div>
+        <div><dt><span data-count-to="85">85</span><small>M</small></dt><dd><b>parameters at the XL size.</b> Transformers trained from scratch are sized in plain words, from Tiny (0.15M) up.</dd></div>
+        <div><dt><span data-count-to="4">4</span></dt><dd><b>training strategies, picked by the planner.</b> A single GPU, data-parallel (DDP), sharded (FSDP), or tensor + pipeline parallel.</dd></div>
+      </dl>
+      <ul class="features">
+        <li class="card"><h3>Recipes for text, code, speech and vision</h3><p>Whisper for speech-to-text, SpeechT5 with a HiFi-GAN vocoder for a custom voice, a ViT-GPT2 image captioner, and synthetic copy and sort tasks where circuits form visibly.</p></li>
+        <li class="card"><h3>Production training knobs</h3><p>Warmup with cosine, linear or constant schedules, gradient accumulation, fp32, bf16 or fp16, clipping, weight decay, label smoothing, early stopping, checkpoints, and LoRA rank, alpha and dropout.</p></li>
+        <li class="card"><h3>Models, endpoints and keys</h3><p>Every saved model shows its own training curve and quality. Serve it over HTTP, compare runs side by side, export a model card, or download weights and tokenizer as a <code>.zip</code>.</p></li>
+        <li class="card"><h3>A planner for multi-GPU runs</h3><p>Give it a model size and a GPU pool: it estimates memory, throughput, cost and wall time, writes the <code>torchrun</code> command, and can launch a real DDP test run.</p></li>
+        <li class="card"><h3>Accounts that hold up</h3><p>Sign-in with Google and GitHub when configured, two-factor authentication with recovery codes, revocable devices, an audit log, and workspaces with roles and invitations.</p></li>
+        <li class="card"><h3>Bring your own model</h3><p><code>TelemetryHooks</code> attaches to any PyTorch transformer that keeps its attention weights, so your own model gets the same live view. A native desktop app runs it all through Tauri.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Interlude: day turns to night. -->
+  <section class="interlude" aria-hidden="true">
+    <div class="wrap"><p class="interlude-text">Three small processes. One machine. Yours.</p></div>
+  </section>
+
+  <!-- Quickstart: the next fiddlehead. -->
+  <section class="section night on-night" id="start" aria-labelledby="start-title">
+    <div class="wrap">
+      <div class="split start-split">
+        <div class="stack">
+          <div class="section-head stack">
+            <p class="eyebrow">Quickstart</p>
+            <h2 id="start-title">Training on your laptop in a minute.</h2>
+            <p class="lead">You need Python 3.10+ and Node 18+. Then open <b>localhost:5173</b>, create a local account and click <b>Train the sample</b>: a tiny model starts learning Hamlet's soliloquy on your machine.</p>
+          </div>
+          <div class="code card">
+            <div class="code-bar"><span>terminal</span><button class="copy" type="button" data-copy="start-code" hidden>Copy</button></div>
+<pre id="start-code"><code>git clone https://github.com/aniketshukla1/fiddlehead.git
+cd fiddlehead
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+make setup
+make dev</code></pre>
+          </div>
+          <p class="note">Fine-tuning open models, speech, image captioning and PDF import use optional packages: <code>pip install transformers peft accelerate soundfile librosa sentencepiece pillow pymupdf</code></p>
+          <div class="actions">
+            <a class="button button-primary" href="https://github.com/aniketshukla1/fiddlehead#quickstart">Read the full guide<span class="knob-dot" aria-hidden="true">→</span></a>
+            <a class="button button-ghost" href="https://github.com/aniketshukla1/fiddlehead">Star on GitHub</a>
+          </div>
+        </div>
+        <div class="stage start-stage">
+          <div class="anchor" data-shape="logo" data-palette="night" style="inset: 6% 10%" aria-hidden="true"></div>
+          <div class="standin standin-mark" aria-hidden="true"><svg viewBox="4.5 3.2 14 19.6"><path class="coil" d="M8.8 21.2C7.3 18.4 6.6 14.6 6.6 9.6L7.0 8.4L7.6 7.4L8.3 6.5L9.2 5.8L10.1 5.3L11.1 5.1L12.1 5.0L13.0 5.1L13.8 5.4L14.5 5.8L15.2 6.3L15.6 6.9L16.0 7.6L16.2 8.2L16.2 8.9L16.2 9.6L16.0 10.1L15.7 10.7L15.3 11.1L14.9 11.4L14.4 11.7L14.0 11.8L13.5 11.9L13.0 11.8L12.6 11.7L12.3 11.5L12.0 11.2L11.7 10.9L11.6 10.6L11.5 10.3L11.4 10.0L11.4 9.6L11.5 9.4L11.7 9.1L11.8 8.9L12.1 8.7"/><circle class="coil-heart" cx="12.9" cy="9.6" r="1.2"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Questions people ask. -->
+  <section class="section night on-night faq-section" aria-labelledby="faq-title">
+    <div class="anchor" data-shape="stars" data-palette="noise" style="inset: 0" aria-hidden="true"></div>
+    <div class="wrap faq-wrap">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-title">Honest answers.</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Do I need a GPU?</summary><p>No. Training runs on the CPU and uses an NVIDIA GPU automatically when there is one. Larger base models and the bigger sizes want a GPU: run the engine on one and connect to it from the wizard.</p></details>
+        <details><summary>How good are the models?</summary><p>Models you train on a laptop in minutes are small. They're genuinely useful on focused data — your writing, a codebase, product names, an accent — and excellent for understanding how these models learn, but they aren't a replacement for frontier chat models.</p></details>
+        <details><summary>Where does my data go?</summary><p>Nowhere you don't send it. The engine, the API and the app all run on your own machine, and there is no Fiddlehead cloud. Data comes from your own files, or from the URL, site, S3, GCS, Google Drive or Dropbox location you point it at.</p></details>
+        <details><summary>Can it fine-tune models I already use?</summary><p>Yes: LoRA or full fine-tunes of GPT-2, DistilGPT-2, SmolLM, Pythia, Qwen2.5 and TinyLlama, Whisper for speech, SpeechT5 for voice and a ViT-GPT2 captioner for images. Install the optional packages first.</p></details>
+        <details><summary>Can I watch my own model code?</summary><p>Yes. <code>hooks.TelemetryHooks</code> attaches to any PyTorch transformer whose attention modules keep their softmax weights in <code>last_attn_weights</code> — a one-line addition to most implementations.</p></details>
+        <details><summary>What does it cost?</summary><p>Nothing. Fiddlehead is MIT licensed, and self-hosted installs have no plans or credit limits.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer on-night">
+  <div class="wrap footer-grid">
+    <p class="footer-brand">fiddlehead · MIT licensed · built on PyTorch, Hugging Face Transformers and PEFT, FastAPI, React, Vite and Tauri</p>
+    <ul class="footer-links">
+      <li><a href="https://github.com/aniketshukla1/fiddlehead">GitHub</a></li>
+      <li><a href="https://github.com/aniketshukla1/fiddlehead/blob/main/CONTRIBUTING.md">Contributing</a></li>
+      <li><a href="https://github.com/aniketshukla1/fiddlehead/blob/main/SECURITY.md">Security</a></li>
+      <li><a href="https://github.com/aniketshukla1/fiddlehead/blob/main/LICENSE">License</a></li>
+    </ul>
+  </div>
+  <p class="footer-mark" data-glow aria-hidden="true">fiddlehead</p>
+</footer>
+
+<div class="scene-layer" data-scene aria-hidden="true"><canvas class="scene-fog"></canvas><canvas class="scene-dots"></canvas></div>
+</body>
+</html>

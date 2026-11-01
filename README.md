@@ -8,6 +8,7 @@
 </p>
 
 <p align="center">
+  <a href="https://aniketshukla1.github.io/fiddlehead/"><img alt="Website" src="https://img.shields.io/badge/website-aniketshukla1.github.io%2Ffiddlehead-3dd68c"></a>
   <a href="https://github.com/aniketshukla1/fiddlehead/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/aniketshukla1/fiddlehead/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-3dd68c"></a>
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776ab">
@@ -17,6 +18,7 @@
 </p>
 
 <p align="center">
+  <a href="https://aniketshukla1.github.io/fiddlehead/">Website</a> ·
   <a href="#quickstart">Quickstart</a> ·
   <a href="#what-you-get">Features</a> ·
   <a href="#how-it-works">How it works</a> ·

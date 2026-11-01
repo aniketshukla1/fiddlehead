@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aniketshukla1.github.io/fiddlehead/sitemap.xml
