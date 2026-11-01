@@ -1,0 +1,34 @@
+name: Bug report
+description: Something doesn't work the way it should
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start with `make dev`
+        2. Create a model from the "…" recipe
+        3. …
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Engine or API output, the browser console, or a screenshot. Remove any keys or tokens first.
+      render: shell
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: macOS 15 · Python 3.11 · Node 20 · Apple Silicon (MPS) / CUDA 12 / CPU
+    validations:
+      required: true

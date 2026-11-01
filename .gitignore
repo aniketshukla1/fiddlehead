@@ -1,0 +1,37 @@
+# secrets — never commit real credentials
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.jwt_secret
+frontend/.env.local
+
+# local data: accounts database, saved models, datasets, job scratch
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+backend/saved/
+backend/datasets/
+*.progress.json
+
+# dependencies and build output
+node_modules/
+frontend/dist/
+frontend/src-tauri/target/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# launch-video scratch (final media is copied into docs/media/)
+brag-output*/
+
+# editor, OS and agent files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.log
+.claude/

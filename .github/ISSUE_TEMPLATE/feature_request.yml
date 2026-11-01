@@ -1,0 +1,20 @@
+name: Feature idea
+description: Suggest something Fiddlehead should do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem or the workflow, not the solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+      description: How you imagine it working. Sketches and screenshots welcome.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you do today instead?

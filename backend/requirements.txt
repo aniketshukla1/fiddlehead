@@ -1,0 +1,24 @@
+# Training engine
+torch>=2.1
+websockets>=12.0
+numpy>=1.24
+tokenizers>=0.15
+
+# Control-plane API (accounts, models, keys, hosted inference)
+fastapi>=0.110
+uvicorn>=0.27
+sqlalchemy>=2.0
+pydantic>=2.5
+python-jose>=3.3
+bcrypt>=4.0
+httpx>=0.27
+email-validator>=2.0
+
+# Optional — enabled automatically when installed:
+#   transformers peft accelerate   fine-tune open models (GPT-2, SmolLM, Qwen, Whisper, …)
+#   soundfile librosa sentencepiece   speech-to-text and text-to-speech templates
+#   pillow                         image captioning
+#   pymupdf                        train on PDF files (best text spacing); or pypdf (fallback)
+#   boto3                          private S3 (s3://) buckets
+#   google-cloud-storage           private GCS (gs://) buckets
+# (Public URLs and Google Drive / Dropbox share links need none of these.)
